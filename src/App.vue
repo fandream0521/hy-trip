@@ -1,15 +1,21 @@
 <script setup>
-
+import TabBarVant from '@/components/tab-bar/TabBarVant.vue'
+import TabBar from './components/tab-bar/TabBar.vue';
+import TabBarIcon from './components/tab-bar/TabBarIcon.vue';
+import { ref } from 'vue'
+const index = ref(0)
 </script>
 
 <template>
   <div class="app">
     <h1>App</h1>
+    <van-button type="primary" @click="index = 0">vant</van-button>
+    <van-button type="primary" @click="index = 1">base</van-button>
+    <van-button type="primary" @click="index = 2">icon</van-button>
     <router-view />
-    <router-link to="/home">Home</router-link>
-    <router-link to="/favor">Favor</router-link>
-    <router-link to="/order">Order</router-link>
-    <router-link to="/profile">Profile</router-link>
+    <TabBarVant v-if="index === 0" />
+    <TabBar v-else-if="index === 1" />
+    <TabBarIcon v-else />
   </div>
 </template>
 
