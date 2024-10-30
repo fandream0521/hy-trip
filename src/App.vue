@@ -1,16 +1,18 @@
 <script setup>
 import TabBarVant from '@/components/tab-bar/TabBarVant.vue'
-import TabBar from './components/tab-bar/TabBar.vue';
-import TabBarIcon from './components/tab-bar/TabBarIcon.vue';
-import { ref } from 'vue'
-const index = ref(0)
+import { useRoute } from 'vue-router';
+const route = useRoute();
 </script>
 
 <template>
   <div class="app">
     <router-view />
-    <TabBarVant />
+    <tab-bar-vant v-if="!route.meta.isHideTabBar" />
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.app {
+  font-size: 16px;
+}
+</style>
