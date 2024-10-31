@@ -1,14 +1,20 @@
 <script setup>
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { showToast } from 'vant'
 import { useRouter } from 'vue-router';
-import { getAllCity } from '@/services/modules/city';
+import useCityStore from '@/stores/modules/city';
+import { storeToRefs } from 'pinia';
 const router = useRouter();
 const searchValue = ref('');
 const onSearch = (val) => showToast(val);
 const onCancel = () => router.back();
-getAllCity();
+
+const cityStore = useCityStore();
+cityStore.fetchAllCities();
+const { allCities, getGroupList } = storeToRefs(cityStore);
+
 const tabActive = ref(0);
+
 </script>
 
 <template>
@@ -18,60 +24,22 @@ const tabActive = ref(0);
                 @cancel="onCancel" />
         </form>
         <van-tabs v-model:active="tabActive" color="#ff9854">
-            <van-tab title="国内·港澳台">
-                <van-index-bar>
+            <van-tab v-for="(item, key) in allCities" :title="item.title">
+                <van-index-bar v-if="item.hotCities?.length > 0" :index-list="[]">
                     <van-index-anchor index="热门" />
-                    <van-row justify="center" align="center">
-                        <van-col span="6">
-                            <van-tag round type="primary" size="large">标签1</van-tag>
-                        </van-col>
-                        <van-col span="6">
-                            <van-tag round type="primary" size="large">标签2</van-tag>
-                        </van-col>
-                        <van-col span="6">
-                            <van-tag round type="primary" size="large">标签3</van-tag>
-                        </van-col>
-                        <van-col span="6">
-                            <van-tag round type="primary" size="large">标签4</van-tag>
-                        </van-col>
-                        <van-col span="6">
-                            <van-tag round type="primary" size="large">标签1</van-tag>
-                        </van-col>
-                        <van-col span="6">
-                            <van-tag round type="primary" size="large">标签2</van-tag>
-                        </van-col>
-                        <van-col span="6">
-                            <van-tag round type="primary" size="large">标签3</van-tag>
-                        </van-col>
-                        <van-col span="6">
-                            <van-tag round type="primary" size="large">标签4</van-tag>
+                    <van-row justify="center">
+                        <van-col span="6" v-for="city in item.hotCities">
+                            <van-tag round type="primary" size="large">{{ city.cityName }}</van-tag>
                         </van-col>
                     </van-row>
-                    <van-index-anchor index="A" />
-                    <van-cell title="文本" />
-                    <van-cell title="文本" />
-                    <van-cell title="文本" />
-
-                    <van-index-anchor index="B" />
-                    <van-cell title="文本" />
-                    <van-cell title="文本" />
-                    <van-cell title="文本" />
+                </van-index-bar>
+                <van-index-bar v-if="item.cities?.length > 0" :index-list="getGroupList(key)">
+                    <template v-for="city in item.cities">
+                        <van-index-anchor :index="city.group" />
+                        <van-cell v-for="c in city.cities" :title="c.cityName" />
+                    </template>
                 </van-index-bar>
             </van-tab>
-            <van-tab title="海外">
-                <van-index-bar>
-                    <van-index-anchor index="A" />
-                    <van-cell title="文本" />
-                    <van-cell title="文本" />
-                    <van-cell title="文本" />
-
-                    <van-index-anchor index="B" />
-                    <van-cell title="文本" />
-                    <van-cell title="文本" />
-                    <van-cell title="文本" />
-                </van-index-bar>
-            </van-tab>
-
         </van-tabs>
     </div>
 </template>
