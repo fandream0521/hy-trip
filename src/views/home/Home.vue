@@ -1,7 +1,13 @@
 <script setup>
 import HomeNavBar from './components/HomeNavBar.vue';
 import HomeSearchBox from './components/HomeSearchBox.vue';
+import useHomeStore from '@/stores/modules/home';
+import { storeToRefs } from 'pinia';
 
+const homeStore = useHomeStore();
+homeStore.fetchAllHomeSuggests();
+homeStore.fetchCategories();
+const { hotSuggests, categories } = storeToRefs(homeStore);
 </script>
 
 <template>
@@ -10,7 +16,7 @@ import HomeSearchBox from './components/HomeSearchBox.vue';
         <div class="banner">
             <img src="@/assets/img/home/banner.webp" alt="banner" />
         </div>
-        <home-search-box />
+        <home-search-box :hot-suggests="hotSuggests" :categories="categories" />
     </div>
 </template>
 
