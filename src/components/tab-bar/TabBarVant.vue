@@ -1,13 +1,22 @@
 <script setup>
+import { computed, ref, watch } from 'vue';
 import tabBarData from '@/assets/data/tab-bar'
-import { ref } from 'vue';
 import { getAssetUrl } from '@/utils';
-const messageCount = ref(0);
+import { useRoute } from 'vue-router';
+const route = useRoute();
+const curIndex = ref(0);
+watch(route, () => {
+    const index = tabBarData.findIndex(item => item.path === route.path);
+    if (index !== -1) {
+        curIndex.value = index;
+    }
+});
+
 
 </script>
 
 <template>
-    <van-tabbar route active-color="#ff9854" inactive-color="#646566">
+    <van-tabbar route active-color="#ff9854" inactive-color="#646566" v-model="curIndex">
         <template v-for="data in tabBarData" :key="data.id">
             <van-tabbar-item replace :to="data.path">
                 <span>{{ data.text }}</span>

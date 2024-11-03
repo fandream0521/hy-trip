@@ -10,3 +10,12 @@ export function getCategories() {
         url: '/home/categories'
     });
 }
+
+export function getHomeListByPage(page) {
+    return hyRequest.get({
+        url: '/home/houselist',
+        params: {
+            page
+        }
+    });
+}

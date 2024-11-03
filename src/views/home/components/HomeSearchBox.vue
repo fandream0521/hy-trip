@@ -5,24 +5,16 @@ import dayjs from 'dayjs';
 import { storeToRefs } from 'pinia';
 import { computed, ref } from 'vue';
 import { useRouter } from 'vue-router';
+import useHomeStore from '@/stores/modules/home';
 
-defineProps({
-    hotSuggests: {
-        type: Array,
-        required: true,
-        default: () => [],
-    },
-    categories: {
-        type: Array,
-        required: true,
-        default: () => [],
-    }
-})
+const homeStore = useHomeStore();
+const { hotSuggests } = storeToRefs(homeStore);
 
 const router = useRouter();
 const cityClick = () => {
     router.push('/city');
 }
+
 const getCurPositon = () => {
     navigator.geolocation.getCurrentPosition((position) => {
         console.log(position);
@@ -63,6 +55,17 @@ const formatter = (day) => {
 
     return day;
 };
+
+const searchClick = () => {
+    router.push({
+        path: '/search',
+        query: {
+            curCity: curCity.value,
+            startDate: startDate.value,
+            endDate: endDate.value,
+        }
+    });
+}
 </script>
 
 <template>
@@ -97,6 +100,7 @@ const formatter = (day) => {
         </div>
         <van-calendar v-model:show="show" type="range" @confirm="onConfirm" :show-confirm="false" :formatter="formatter"
             :round="false" color="#ff9854" />
+
         <div class="info">
             <div class="desc selection">
                 <span>价格不限</span>
@@ -112,6 +116,13 @@ const formatter = (day) => {
                 }">
                     {{ suggest.tagText.text }}
                 </a>
+            </div>
+        </div>
+
+        <!-- 搜索 -->
+        <div class="search-btn">
+            <div class="btn" @click="searchClick">
+                开始搜索
             </div>
         </div>
     </div>
@@ -207,5 +218,27 @@ const formatter = (day) => {
             margin: 3px 5px;
         }
     }
+
+    .search-btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 64px;
+
+        .btn {
+            width: 342px;
+            height: 38px;
+            max-height: 50px;
+            font-weight: 500;
+            font-size: 18px;
+            line-height: 38px;
+            text-align: center;
+            border-radius: 20px;
+            color: #fff;
+            background-image: var(--theme-linear-gradient),
+        }
+    }
+
+
 }
 </style>
