@@ -1,11 +1,11 @@
 <script setup>
 import useCityStore from '@/stores/modules/city';
-import { formatMonthDay } from '@/utils/format-date';
 import dayjs from 'dayjs';
 import { storeToRefs } from 'pinia';
-import { computed, ref } from 'vue';
+import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import useHomeStore from '@/stores/modules/home';
+import useMainStore from '@/stores/modules/main';
 
 const homeStore = useHomeStore();
 const { hotSuggests } = storeToRefs(homeStore);
@@ -30,18 +30,13 @@ const getCurPositon = () => {
 const cityStore = useCityStore();
 const { curCity } = storeToRefs(cityStore);
 
-
-const startDate = ref(dayjs());
-const endDate = ref(dayjs().add(4, 'day'));
-const formatStartDate = computed(() => formatMonthDay(startDate.value));
-const formatEndDate = computed(() => formatMonthDay(endDate.value));
-const diffDays = computed(() => endDate.value.diff(startDate.value, 'day'));
+const mainStore = useMainStore();
 
 const show = ref(false);
 
 const onConfirm = (value) => {
-    startDate.value = dayjs(value[0]);
-    endDate.value = dayjs(value[1]);
+    mainStore.startDate = dayjs(value[0]);
+    mainStore.endDate = dayjs(value[1]);
     show.value = false;
 
 }
@@ -83,18 +78,18 @@ const searchClick = () => {
                     入住
                 </span>
                 <span class="date">
-                    {{ formatStartDate }}
+                    {{ mainStore.formattedStartDate() }}
                 </span>
             </div>
             <div class="stay">
-                共{{ diffDays }}晚
+                共{{ mainStore.diffDays }}晚
             </div>
             <div class="end">
                 <span class="text">
                     离店
                 </span>
                 <span class="date">
-                    {{ formatEndDate }}
+                    {{ mainStore.formattedEndDate() }}
                 </span>
             </div>
         </div>

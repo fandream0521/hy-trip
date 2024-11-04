@@ -3,6 +3,7 @@ import HomeNavBar from './components/HomeNavBar.vue';
 import HomeSearchBox from './components/HomeSearchBox.vue';
 import HomeCategories from './components/HomeCategories.vue';
 import HomeContent from './components/HomeContent.vue';
+import SearchBar from '@/components/search-bar/SearchBar.vue';
 import useHomeStore from '@/stores/modules/home';
 import useScroll from '@/hooks/useScroll';
 import { watch, ref, computed } from 'vue';
@@ -20,29 +21,28 @@ watch(isReachBottom, (val) => {
     }
 });
 // 监听滚动事件，控制搜索框的显示和隐藏
-const isShowSearchBar = computed(() => scrollY.value > 100);
+const isShowSearchBar = computed(() => scrollY.value > 360);
 
 </script>
 
 <template>
     <div class="home">
         <home-nav-bar title="宏源旅途" />
-        <div class="search-bar" v-if="isShowSearchBar">
-            <van-search placeholder="搜索目的地、景点、酒店" />
-        </div>
+
         <div class="banner">
             <img src="@/assets/img/home/banner.webp" alt="banner" />
         </div>
         <home-search-box />
         <home-categories />
-
+        <div class="search-bar-box" v-if="isShowSearchBar">
+            <search-bar />
+        </div>
         <home-content />
     </div>
 </template>
 
 <style lang="less" scoped>
 .home {
-    position: relative;
     background: #f5f5f5;
 
     .banner {
@@ -51,11 +51,15 @@ const isShowSearchBar = computed(() => scrollY.value > 100);
         }
     }
 
-    .search-bar {
-        position: sticky;
+    .search-bar-box {
+        position: fixed;
         top: 0;
         left: 0;
         right: 0;
+
+        height: 45px;
+        padding: 16px 16px 10px;
+        background-color: #fff;
         z-index: 10;
     }
 
