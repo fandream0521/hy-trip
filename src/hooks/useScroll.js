@@ -18,7 +18,7 @@ export default function useScroll() {
         } else {
             isReachBottom.value = false;
         }
-    }, 1000);
+    }, 100);
 
     onMounted(() => {
         console.log('useScroll mounted');

@@ -7,6 +7,7 @@ const { item } = defineProps({
         default: () => ({})
     }
 })
+
 </script>
 
 <template>

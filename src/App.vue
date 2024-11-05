@@ -1,5 +1,6 @@
 <script setup>
 import TabBarVant from '@/components/tab-bar/TabBarVant.vue'
+import Loading from './components/loading/Loading.vue';
 import { useRoute } from 'vue-router';
 const route = useRoute();
 </script>
@@ -8,10 +9,11 @@ const route = useRoute();
   <div class="app">
     <router-view />
     <tab-bar-vant v-if="!route.meta.isHideTabBar" />
+    <loading />
   </div>
 </template>
 
-<style scoped>
+<style lang="less" scoped>
 .app {
   font-size: 16px;
 }

@@ -9,7 +9,8 @@ const endDate = ref(dayjs().add(1, 'day'));
 const useMainStore = defineStore("main", {
     state: () => ({
         startDate,
-        endDate
+        endDate,
+        isLoading: false
     }),
     getters: {
         formattedStartDate() {

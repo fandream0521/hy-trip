@@ -34,6 +34,7 @@ const mainStore = useMainStore();
 
     font-size: 10px;
     background-color: #f5f5f5;
+    height: 40px;
     border-radius: 10px;
 
     .time-range {
@@ -41,6 +42,7 @@ const mainStore = useMainStore();
         padding: 0 10px;
 
         .item {
+            padding: 3px 0;
 
             .text {
                 color: #666;

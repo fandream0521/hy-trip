@@ -56,8 +56,8 @@ const searchClick = () => {
         path: '/search',
         query: {
             curCity: curCity.value,
-            startDate: startDate.value,
-            endDate: endDate.value,
+            startDate: mainStore.startDate,
+            endDate: mainStore.endDate,
         }
     });
 }
