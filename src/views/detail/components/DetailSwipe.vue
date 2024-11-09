@@ -1,11 +1,14 @@
 <script setup>
-import useDetailStore from '@/stores/modules/detail';
-import { storeToRefs } from 'pinia';
-import { computed } from 'vue';
+import { computed, defineProps } from 'vue';
+const props = defineProps({
+    topModule: {
+        type: Object,
+        required: true,
+        default: () => ({})
+    }
+})
 
-const detailStore = useDetailStore();
-const { mainPart } = storeToRefs(detailStore);
-const housePics = computed(() => mainPart.value.topModule?.housePicture.housePics);
+const housePics = computed(() => props.topModule.housePicture?.housePics);
 const categoryHouses = computed(() => {
     let map = {};
     housePics.value?.forEach(pic => {
@@ -22,7 +25,7 @@ const categoryHouses = computed(() => {
 /// replace 【】： to ''
 const nameReg = /【(.*?)】/i
 function getName(name) {
-    const result = nameReg.exec(name);
+
     return nameReg.exec(name)[1]
 }
 
@@ -38,7 +41,7 @@ function getRealIndexInCategory(item) {
             <van-swipe-item v-for="pic in housePics" :key="pic.orderIndex">
                 <img :src="pic.url" alt="house-pic" />
             </van-swipe-item>
-            <template #indicator="{ active, total }">
+            <template #indicator="{ active }">
                 <div class="indicator">
                     <div class="category" v-for="(list, category) in categoryHouses" :key="category">
                         <div class="item" :class="{ active: housePics[active]?.enumPictureCategory == category }">
