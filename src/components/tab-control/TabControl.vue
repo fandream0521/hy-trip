@@ -1,17 +1,29 @@
 <script setup>
-import { defineProps, ref } from 'vue';
-defineProps({
+import { defineProps, ref, watch } from 'vue';
+const props = defineProps({
     titles: {
         type: Array,
         required: true,
         default: () => []
+    },
+    curIndex: {
+        type: Number,
+        required: true,
+        default: 0
     }
 })
+
+watch(() => props.curIndex, (val) => {
+    currentIndex.value = val;
+})
+
+const emit = defineEmits(['tabClick']);
 
 const currentIndex = ref(0);
 
 const itemClick = (index) => {
     currentIndex.value = index;
+    emit('tabClick', index);
 }
 </script>
 

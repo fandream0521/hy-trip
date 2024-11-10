@@ -75,6 +75,8 @@ const formatMore = (count) => {
 
 <style lang="less" scoped>
 .comments {
+    padding: 10px 0;
+
     .summary {
         display: flex;
         justify-content: space-between;

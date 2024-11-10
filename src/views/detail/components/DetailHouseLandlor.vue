@@ -12,8 +12,8 @@ defineProps({
 <template>
     <div class="landlord">
         <detail-section title="房东介绍" footer="查看房东主页">
-            <div class="top-scroll">
-                <img :src="landlordModule?.topScroll" alt="landlord-pic" />
+            <div class="top-scroll" v-if="landlordModule.topScroll">
+                <img :src="landlordModule.topScroll" alt="landlord-pic" />
             </div>
             <div class="info">
                 <div class="left">
@@ -36,7 +36,7 @@ defineProps({
                     <van-button round color="var(--primary-color)" size="mini">联系房东</van-button>
                 </div>
             </div>
-            <div class="summary">
+            <div class="summary" v-if="landlordModule.hotelSummary">
                 <div class="item" v-for="item in landlordModule.hotelSummary">
                     <span class="title">{{ item.title }}</span>
                     <span class="introduction">{{ item.introduction }}</span>
@@ -49,7 +49,7 @@ defineProps({
 
 <style lang="less" scoped>
 .landlord {
-    margin-top: 10px;
+    padding: 10px 0;
 
     .top-scroll {
         img {

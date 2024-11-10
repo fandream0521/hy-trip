@@ -14,10 +14,9 @@ import DetailSection from '@/components/detail-section/DetailSection.vue';
 
 <style lang="less" scoped>
 .map {
+    padding: 10px 0;
 
     .map-container {
-        margin-top: 10px;
-
         img {
             width: 100%;
         }
