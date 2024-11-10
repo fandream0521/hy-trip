@@ -49,7 +49,7 @@ defineProps({
 
 <style lang="less" scoped>
 .landlord {
-    padding: 10px 0;
+    padding-bottom: 10px;
 
     .top-scroll {
         img {

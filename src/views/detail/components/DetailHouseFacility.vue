@@ -37,7 +37,7 @@ defineProps({
 
 <style lang="less" scoped>
 .house-facility {
-    padding: 10px 0;
+    padding-bottom: 10px;
 
     .item {
         display: flex;

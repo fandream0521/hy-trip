@@ -35,7 +35,6 @@ defineProps({
 
 <style lang="less" scoped>
 .section {
-    margin-top: 15px;
     border-top: 3px solid #f2f3f4;
 
     .title {

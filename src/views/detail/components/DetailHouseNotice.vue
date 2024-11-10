@@ -26,7 +26,7 @@ defineProps({
 
 <style lang="less" scoped>
 .notice {
-    padding: 10px 0;
+    padding-bottom: 10px;
 
     .notice-item {
         display: flex;

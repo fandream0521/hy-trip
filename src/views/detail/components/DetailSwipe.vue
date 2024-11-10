@@ -64,6 +64,8 @@ function getRealIndexInCategory(item) {
 
 <style lang="less" scoped>
 .my-swipe {
+    padding-bottom: 10px;
+
     img {
         width: 100%;
     }

@@ -14,7 +14,9 @@ const props = defineProps({
 })
 
 watch(() => props.curIndex, (val) => {
-    currentIndex.value = val;
+    if (val) {
+        currentIndex.value = val;
+    }
 })
 
 const emit = defineEmits(['tabClick']);
@@ -45,7 +47,9 @@ const itemClick = (index) => {
     right: 0;
     display: flex;
     justify-content: space-around;
-    padding: 10px 0;
+    align-items: center;
+
+    height: 44px;
 
     background: #fff;
 

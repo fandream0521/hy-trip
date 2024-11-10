@@ -11,7 +11,7 @@ import DetailHouseMap from './components/DetailHouseMap.vue';
 import DetailHouseIntroduction from './components/DetailHouseIntroduction.vue';
 import TabControl from '@/components/tab-control/TabControl.vue';
 import useScroll from '@/hooks/useScroll';
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted, onActivated } from 'vue';
 import { storeToRefs } from 'pinia';
 const router = useRouter();
 const onClickLeft = () => {
@@ -19,7 +19,7 @@ const onClickLeft = () => {
 };
 const route = useRoute();
 const detailStore = useDetailStore();
-detailStore.getDetailInfos(route.params.houseId);
+
 const { mainPart } = storeToRefs(detailStore);
 const detailRef = ref();
 const { scrollY } = useScroll(detailRef);
@@ -27,14 +27,19 @@ const showTabControl = computed(() => {
     console.log(scrollY.value);
     return scrollY.value > 265;
 });
+let isTouch = false;
 const tabClick = (index) => {
     let key = Object.keys(elRefs.value)[index];
     let el = elRefs.value[key];
+    isTouch = false;
     detailRef.value.scrollTo({
-        top: el.offsetTop - 36,
+        top: el.offsetTop - 44,
         behavior: 'smooth'
     });
 };
+
+
+
 
 const elRefs = ref({});
 const names = computed(() => {
@@ -50,16 +55,32 @@ const getSectionRef = (val) => {
 }
 
 const curIndex = computed(() => {
+    if (!isTouch) {
+        return;
+    }
     let index = 0;
     let keys = Object.keys(elRefs.value);
     for (let i = 0; i < keys.length; i++) {
-        if (elRefs.value[keys[i]].offsetTop - 36 < scrollY.value) {
+        if (elRefs.value[keys[i]].offsetTop - 44 <= scrollY.value) {
             index = i;
         } else {
             break;
         }
     }
     return index;
+});
+
+onMounted(() => {
+    // 监听触摸事件
+    detailRef.value.addEventListener('touchmove', () => {
+        console.log('touchmove');
+        isTouch = true;
+    });
+});
+
+onActivated(() => {
+    console.log('onActivated');
+    detailStore.getDetailInfos(route.params.houseId);
 });
 </script>
 

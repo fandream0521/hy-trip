@@ -14,7 +14,7 @@ import DetailSection from '@/components/detail-section/DetailSection.vue';
 
 <style lang="less" scoped>
 .map {
-    padding: 10px 0;
+    padding-bottom: 10px;
 
     .map-container {
         img {

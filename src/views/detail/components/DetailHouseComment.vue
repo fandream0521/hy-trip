@@ -75,7 +75,7 @@ const formatMore = (count) => {
 
 <style lang="less" scoped>
 .comments {
-    padding: 10px 0;
+    padding-bottom: 10px;
 
     .summary {
         display: flex;

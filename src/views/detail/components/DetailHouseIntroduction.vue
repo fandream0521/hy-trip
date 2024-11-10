@@ -20,7 +20,7 @@ defineProps({
 
 <style lang="less" scoped>
 .introduction {
-    margin-top: 10px;
+    padding-bottom: 10px;
 
     .title {
         font-size: 18px;

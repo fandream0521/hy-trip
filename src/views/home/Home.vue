@@ -6,14 +6,15 @@ import HomeContent from './components/HomeContent.vue';
 import SearchBar from '@/components/search-bar/SearchBar.vue';
 import useHomeStore from '@/stores/modules/home';
 import useScroll from '@/hooks/useScroll';
-import { watch, ref, computed } from 'vue';
+import { watch, ref, computed, onActivated } from 'vue';
 
 const homeStore = useHomeStore();
 homeStore.fetchAllHomeSuggests();
 homeStore.fetchCategories();
 homeStore.fetchHomeListByPage();
+const homeRef = ref();
 // 监听window的scroll事件
-const { isReachBottom, scrollY } = useScroll();
+const { isReachBottom, scrollY } = useScroll(homeRef);
 // 监听滚动到底部事件
 watch(isReachBottom, (val) => {
     if (val) {
@@ -23,10 +24,16 @@ watch(isReachBottom, (val) => {
 // 监听滚动事件，控制搜索框的显示和隐藏
 const isShowSearchBar = computed(() => scrollY.value > 360);
 
+// 当返回当前页面时，保存滚动位置
+onActivated(() => {
+    homeRef.value.scrollTo({
+        top: scrollY.value
+    })
+})
 </script>
 
 <template>
-    <div class="home">
+    <div class="home" ref="homeRef">
         <home-nav-bar title="宏源旅途" />
 
         <div class="banner">
@@ -43,7 +50,11 @@ const isShowSearchBar = computed(() => scrollY.value > 360);
 
 <style lang="less" scoped>
 .home {
+    height: 100vh;
+    box-sizing: border-box;
+    overflow-y: auto;
     background: #f5f5f5;
+
 
     .banner {
         img {

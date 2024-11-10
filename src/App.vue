@@ -7,7 +7,12 @@ const route = useRoute();
 
 <template>
   <div class="app">
-    <router-view />
+    <router-view #default="{ Component }">
+      <keep-alive>
+        <component :is="Component" />
+      </keep-alive>
+    </router-view>
+
     <tab-bar-vant v-if="!route.meta.isHideTabBar" />
     <loading />
   </div>
